@@ -1,0 +1,67 @@
+<div class="row">
+   <form class="col s12" #f="ngForm" (ngSubmit)="onSubmitTemplateBased()">
+
+     <div class="row">
+       <div class="input-field col s4">
+         <input id="nome" type="text" name="nome"
+         class="validate" [(ngModel)]="pessoa.nome" required>
+         <label for="nome">Nome</label>
+       </div>
+
+       <div class="input-field col s4">
+         <input id="last_name" type="text" class="validate">
+         <label for="last_name">Sobrenome</label>
+       </div>
+
+       <div class="input-field col s4">
+         <input id="last_name" type="text" class="validate">
+         <label for="last_name">Sobrenome solteira</label>
+       </div>
+     </div>
+
+    <div class="row">
+        
+        <div class="input-field col s6">
+          <select>
+            <option disabled selected>Selecione</option>
+            <option *ngFor="let tipoData of listaTipoData" value="{{ tipoData }}">
+              {{ tipoData }}
+            </option>
+          </select>          
+          <label>Data</label>
+        </div>
+       
+
+       <div class="input-field col s6">
+         <input id="dataNascimento" type="text" [(ngModel)]="pessoa.dataNascimento" 
+         [ngModelOptions]="{standalone: true}" 
+         mask="**/**/****">
+         <label for="dataNascimento">Data nascimento</label>
+       </div>
+
+       
+     </div>
+
+    
+
+     <div class="row">
+       <div class="input-field col s12">
+         <input id="email" type="email" class="validate">
+         <label for="email">Email</label>
+       </div>
+     </div>
+
+     <div class="row">
+       <div class="input-field col s12">
+         <input id="password" type="password" class="validate">
+         <label for="password">Password</label>
+       </div>
+     </div>
+
+ <div class="row">
+     <button class="btn waves-effect waves-light" type="submit" name="action">
+       Salvar
+      </button>
+ </div>
+   </form>
+ </div>
