@@ -1,3 +1,4 @@
+import { RegistrarComponent } from './pessoa/registrar/registrar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +18,8 @@ import { MascaraDirective } from './mascara.directive';
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    RegistrarComponent
   ],
   imports: [
     BrowserModule,

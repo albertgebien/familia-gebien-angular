@@ -1,3 +1,4 @@
+import { PessoaService } from './pessoa.service';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -10,6 +11,7 @@ import { PessoaFormComponent } from './pessoa-form/pessoa-form.component';
 import { PessoaDetalheComponent } from './pessoa-detalhe/pessoa-detalhe.component';
 
 import { MascaraDirective } from './../mascara.directive';
+import { RegistrarComponent } from './registrar/registrar.component';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { MascaraDirective } from './../mascara.directive';
         PessoaFormComponent,
         PessoaDetalheComponent,
         MascaraDirective
+        
+        
     ],
     providers: [],
 })
