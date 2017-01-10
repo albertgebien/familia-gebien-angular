@@ -1,7 +1,9 @@
+import { RetornoVO } from './../model/RetornoVO';
+import { Pessoa } from './../model/Pessoa';
 import { Injectable } from '@angular/core';
 
-import { Headers, Http } from '@angular/http';
-import { Pessoa } from '../model/Pessoa';
+import { Headers, Http,Response, RequestOptions } from '@angular/http';
+
 
 //import 'rxjs/add/operator/toPromise';
 
@@ -18,67 +20,89 @@ import { Pessoa } from '../model/Pessoa';
 //import 'rxjs/add/operator/map';
 //import 'rxjs/add/operator/switchMap';
 
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
+
+
+
 @Injectable()
 export class PessoaService {
 
  private url = 'http://localhost:8080/familiagebien/rest/pessoa/form';
  private urlRegistrar = 'http://localhost:8080/familiagebien/rest/pessoa/registrar';
+ //private urlRegistrar = 'http://localhost:8080/familiagebien/rest/pessoa/buscar';
+ 
 
- private _http:Http;
+ //private _http:Http;
  private valor: any;
 // private headers = new Headers({'Content-Type': 'application/json'},
   //                             {'Access-Control-Allow-Origin': 'http://localhost:4200'});
 
-private headers:Headers = new Headers();
+//private headers:Headers = null;
 //headers.append('Content-Type', 'application/json');
 
-  constructor(private http: Http) { 
-    this._http = http;
-    this.headers = new Headers();
-    this.headers.append('Accept', 'application/json');
-    this.headers.append('Content-Type', 'application/json');
-    //this.headers.append('Access-Control-Allow-Origin', '*');
-  }
+  constructor(
+    private http: Http
+  ) { }
 
-  private handleError(error: any): Promise<any> {
-
-    //console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
-
-
-  adicionarPessoa(valor:string){
+  private handleError(error: Response | any) {
+    let errMsg: string;
     
-    //this._http.post(this.url,valor,{headers: this.headers})
-     //.toPromise()
-    //.then(res => res.json().data)
-    //.catch(this.handleError);
-
-    console.info(this.valor);
-
-  /*  this._http.get('http://localhost:8080/familiagebien/rest/pessoa/listar')
-      .toPromise().then(response => response.json().data as Pessoa[])
-               .catch(this.handleError);*/
+    if (error instanceof Response) {
+      console.info('entrou aq');
+      //const body = error.json() || '';
+      //const err = body.error || JSON.stringify(body);
+      //errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      console.info('entrou else');
+      //errMsg = error.message ? error.message : error.toString();
+    }
+    //console.error(errMsg);
+    //return Observable.throw(errMsg);
+    return Promise.reject(errMsg);
   }
 
-  private extractData(res: any) {
+  private extractData(res: Response) {
+    //console.info(JSON.parse(res.json()));
+    //console.info(res);
+    //console.info(res.json().dados["PESSOA"]);
+    //console.info(res.json()[0]);
+    //console.info(res.json()[1]);
     let body = res.json();
-    console.info(body);
+    
+    //    console.info(body.dados["PESSOA"].idPessoa);
+    //console.info(body.nome);
     return body.data || { };
   }
 
-  registrarPessoa(pessoa: Pessoa): Promise<string>{
+  adicionarPessoa(pessoa:string){
+
+  }
+
+  registrarPessoa(pessoa: Pessoa): Observable<RetornoVO> {
     //console.info(JSON.stringify(pessoa));
     
-    this._http.post(this.urlRegistrar,JSON.stringify(pessoa),{headers: this.headers})
-    .subscribe(res => this.valor = res.json());
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    headers.append('Accept', 'application/json');
 
-    console.info(this.valor);
-    //http.get('people.json').subscribe((res:Response) => this.people = res.json());
-
+    let options = new RequestOptions({ headers: headers });
     
-    //.then(res => res.json().data).catch(this.handleError);
+    //return this.http.get(this.urlRegistrar)
+      //      .toPromise()
+        //    .then(this.extractData)
+          //  .catch(this.handleError);
+            
+         
 
-    return null;
+   return this.http.post(this.urlRegistrar,JSON.stringify(pessoa),options)
+   .map(res => res.json());
+   
+   //.toPromise();
+   //.then(this.extractData)
+   //.catch(this.handleError);
+    
+    
   } 
 }
